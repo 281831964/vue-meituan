@@ -31,14 +31,15 @@
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import "../style/mixin.scss";
   #star{
-    @include px2rem(width, 140);
     display: inline-block;
+    margin-right: 0.2rem;
     font-size:0;
     .on,.half,.off{
       display: inline-block;
       @include px2rem(width, 20);
       @include px2rem(height, 20);
-      margin-right:3px;
+
+      margin-right:0.2rem;
       background-size: 100%;
       background-repeat: no-repeat;
     }

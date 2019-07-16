@@ -23,21 +23,13 @@
                 <div class="sell-num">月售 {{spus.month_saled_content}}</div>
                 <span class="price"> ￥{{spus.skus[0].price}}</span>
               </div>
-              <selector
-                @showDot="showDotFun"
-                :name="spus.name"
-                :food_id="spus.skus[0].id"
-                :price="spus.skus[0].price"
-                :pic="spus.pic_url">
-              </selector>
+              <selector @showDot="showDotFun" :name="spus.name" :food_id="spus.skus[0].id" :price="spus.skus[0].price" :pic="spus.pic_url"></selector>
             </section>
           </article>
         </section>
       </article>
     </div>
-    <transition appear
-                @after-appear='afterEnter'
-                @before-appear="beforeEnter" v-for="(ball,index) in balls" :key="index">
+    <transition appear @after-appear='afterEnter' @before-appear="beforeEnter" v-for="(ball,index) in balls" :key="index">
       <div class="balls" ref="balls" v-if="ball">
         <span class="ball"></span>
       </div>
@@ -151,110 +143,5 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import "../../../style/mixin.scss";
-
-  #menu {
-    display: flex;
-    flex: 1;
-    padding-bottom: 1.368rem;
-    overflow: hidden;
-    .left, .right {
-      overflow: hidden;
-    }
-    /*菜单左侧列表样式*/
-    .left {
-      @include px2rem(width, 140);
-      background: rgb(244, 244, 244);
-      ul {
-        li {
-          display: flex;
-          @include px2rem(height, 100);
-          padding: 0 0.2rem;
-          /*justify-content: center;*/
-          align-items: center;
-          font-size: 0.3rem;
-          @include px2rem(line-height, 40);
-          border-bottom: 1px dashed $mtGrey;
-          &.activity-menu {
-            background: #fff;
-          }
-        }
-      }
-    }
-    /*右侧商品样式*/
-    .right {
-      position: relative;
-      flex: 1;
-      article {
-        & > section {
-          padding-top: 0.2rem;
-          h2 {
-            font-size: 0.4rem;
-            font-weight: bold;
-            margin: 0 0.2rem;
-            padding-left: 0.2rem;
-            border-left: 3px solid $mtYellow;
-          }
-          article {
-            section {
-              display: flex;
-              position: relative;
-              margin: 0 0.5rem;
-              padding: 0.2rem 0;
-              border-bottom: 1px solid $mtGrey;
-              .img {
-                @include px2rem(width, 122);
-                @include px2rem(height, 126);
-                margin-right: 0.2rem;
-                img {
-                  width: 100%;
-                  height: 100%;
-                }
-              }
-
-              .info {
-                flex: 1;
-                vertical-align: top;
-                .name, .price {
-                  font-weight: bold;
-                }
-                .name {
-                  font-size: 0.3rem;
-                }
-                .sell-num {
-                  font-size: 0.3rem;
-                  margin: 0.2rem 0;
-                }
-                .price {
-                  color: rgb(251, 79, 69);
-                  font-size: 0.4rem;
-
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    .balls {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 999;
-      .ball {
-        display: inline-block;
-        @include px2rem(width, 20);
-        @include px2rem(height, 20);
-        border-radius: 50%;
-        background: $mtYellow;
-      }
-    }
-  }
-
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s
-  }
-
-  .fade-enter, .fade-leave-to { /* .fade-leave-active in below version 2.1.8 */
-    opacity: 0
-  }
+  @import "./menu.scss";
 </style>

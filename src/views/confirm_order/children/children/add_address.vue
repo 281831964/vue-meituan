@@ -78,17 +78,17 @@
   @import "../../../../style/mixin";
 
   #address {
+    margin:0 0.2rem;
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    background: #f4f4f4;
     .btn-save {
       position: absolute;
       right: 15px;
       top: 2px;
-      font-size: 0.5rem;
+      font-size: 0.4rem;
       font-weight: 600;
     }
   }

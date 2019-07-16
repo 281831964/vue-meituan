@@ -1,56 +1,54 @@
 <!--附近商家组件-->
 <template>
   <div class="nearby-shops">
-    <nav ref="nav">
-      <ul>
-        <li>综合排序 <i class="iconfont icon-sort">&#xe601;</i></li>
-        <li>销量最高</li>
-        <li>距离最近</li>
-        <li>筛选</li>
-      </ul>
-    </nav>
-    <!--商家列表-->
-    <article>
-      <router-link
-        v-for="(item) in shopLists"
-        :to="{path:'store',query:{id:item.id}}"
-        :key="item.id"
-        tag="section">
-        <div class="img-show">
-          <img :src="item.pic_url">
-        </div>
-        <div class="detail">
-          <h4>{{item.name}}</h4>
-          <div class="shops-message">
-            <v-star :score="item.wm_poi_score"></v-star>
-            <span class="sell-num">{{item.month_sales_tip}}</span>
-            <div class="delivery-info">
-              <span class="deliver-time">{{item.delivery_time_tip}}/</span>
-              <span class="distance">{{item.distance}}</span>
+    <mt-navbar v-model="active">
+      <mt-tab-item id="tab-container1">最实惠套餐</mt-tab-item>
+      <mt-tab-item id="tab-container2">最近美食</mt-tab-item>
+      <mt-tab-item id="tab-container3">最火点餐</mt-tab-item>
+      <mt-tab-item id="tab-container4">最新菜品</mt-tab-item>
+    </mt-navbar>
+    <mt-tab-container v-model="active">
+      <mt-tab-container-item id="tab-container1">
+        <article>
+          <router-link v-for="(item) in shopLists" :to="{path:'store',query:{id:item.id}}" :key="item.id" tag="section">
+            <div class="img-show">
+              <img :src="'http://img.zuofan.cn/thumb/s/2018/6/1528441469803231,c_fill,h_180,w_240.jpg'">
             </div>
-          </div>
-          <div class="price-message">
-            <span>{{item.min_price_tip}} | </span>
-            <span>{{item.shipping_fee_tip}} | </span>
-            <span>{{item.average_price_tip}}</span>
-          </div>
-          <div class="active-message">
-            <ul>
-              <li v-for="(discount,index) in item.discounts2.slice(0, 1)" :key="index">
-                <div class="discount-left">
-                  <img :src="discount.icon_url" class="icon">
-                  <span class="info">{{discount.info}}</span>
+            <div class="detail">
+              <h4>{{item.name}}</h4>
+              <div class="shops-message">
+                <v-star :score="item.wm_poi_score"></v-star>
+                <span class="sell-num">{{item.month_sales_tip}}</span>
+                <div class="delivery-info">
+                  <span class="deliver-time">{{item.delivery_time_tip}}/</span>
+                  <span class="distance">{{item.distance}}</span>
                 </div>
-                <router-link to="/shops" v-if="index === 0">
-                  <i class="iconfont icon-entry">&#xe645;</i>
-                </router-link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </router-link>
-    </article>
-
+              </div>
+              <div class="price-message">
+                <span>{{item.min_price_tip}} | </span>
+                <span>{{item.shipping_fee_tip}} | </span>
+                <span>{{item.average_price_tip}}</span>
+              </div>
+              <div class="active-message">
+                <ul>
+                  <li v-for="(discount,index) in item.discounts2.slice(0, 1)" :key="index">
+                    <div class="discount-left">
+                      <img :src="discount.icon_url" class="icon">
+                      <span class="info">{{discount.info}}</span>
+                    </div>
+                    <router-link to="/shops" v-if="index === 0">
+                      <i class="iconfont icon-entry">&#xe645;</i>
+                    </router-link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </router-link>
+        </article>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="tab-container2"></mt-tab-container-item>
+      <mt-tab-container-item id="tab-container3"></mt-tab-container-item>
+    </mt-tab-container>
     <!--加载更多-->
     <div class="loading-wrap" ref="loading">
       <span class="loading" v-show="loading && !noMore">正在努力加载中…</span>
@@ -63,6 +61,7 @@
   import BScroll from 'better-scroll'
   import {getRestaurants} from '@/api/restaurant'
   import {mapGetters} from 'vuex'
+  import {TabContainer,TabContainerItem,Navbar,TabItem} from 'mint-ui'
 
   export default {
     data() {
@@ -74,8 +73,15 @@
         page: 1,               //当前餐馆列表加载到第几页
         limit: 4,              //每次拉去的餐馆数量
         noMore: false,        //没有更多数据了
-        preventRepeat: false   //避免重复请求
+        preventRepeat: false,   //避免重复请求
+        active:'tab-container1'
       }
+    },
+    components: {
+      [TabContainer.name]: TabContainer,
+      [TabContainerItem.name]: TabContainerItem,
+      [TabItem.name]: TabItem,
+      [Navbar.name]: Navbar,
     },
     computed: {
       ...mapGetters(['address'])
@@ -136,13 +142,13 @@
       }
     },
     created() {
-      let {lat, lng} = this.address;
-      if (lat && lng) {
+      // let {lat, lng} = this.address;
+      // if (lat && lng) {//根据 定位信息判断是否是需要重新定位
         this.shopLists = [];
         this.firstFetch();
-      } else {
-        this.$store.dispatch('location');
-      }
+      // } else {
+      //   this.$store.dispatch('location');
+      // }
     },
     watch: {
       address(value) {    //地址发生变化，重新获取商家
@@ -186,15 +192,16 @@
     article {
       position: relative;
       section {
+        border-radius: 10px;
         display: flex;
-        padding: 0.3rem 0;
-        margin: 0 0.2rem;
-        border-bottom: 1px solid $mtGrey;
+        padding: 0.3rem;
+        margin: 0.2rem;
+        background: #ffffff;
+        /*border-bottom: 1px solid $mtGrey;*/
         .img-show {
           @include px2rem(width, 170);
           @include px2rem(height, 130);
           margin-right: 0.2rem;
-          border: 1px solid $mtGrey;
           text-align: center;
           img {
             width: 100%;

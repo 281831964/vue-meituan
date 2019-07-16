@@ -3,7 +3,7 @@
   <div id="address">
     <v-head title="我的收货地址" goBack=true></v-head>
     <nav>
-      <span>我的收获地址</span>
+      <span>地址</span>
       <span v-show="!status" @click="managerAddress()">管理</span>
       <span v-show="status" @click="finish()">完成</span>
     </nav>
@@ -93,20 +93,21 @@
 
     }
     .container {
-      margin-top: 0.2rem;
+      margin: 0.2rem;
       ul {
         li {
+          padding: 0.2rem;
+          border-radius:5px ;
           display: flex;
           align-items: center;
           position: relative;
-          padding: 0.2rem;
+          padding: 0.3rem;
           background: #fff;
           div {
             flex: 1;
             p {
               font-size: 0.4rem;
-              font-weight: 600;
-              margin: 0.1rem 0;
+              margin: 0rem 0 0.3rem;
             }
             span {
               color: #848484;
@@ -127,21 +128,25 @@
       }
     }
     .add {
-      width: 100%;
+      width: 94%;
       position: fixed;
-      bottom: 0;
+      bottom: 0.2rem;
+      margin: 0 0.3rem;
       text-align: center;
+      vertical-align: baseline;
       @include px2rem(line-height, 100);
-      border-top: 1px solid $mtGrey;
-      border-bottom: 1px solid $mtGrey;
+      @include px2rem(height, 100);
+      background: white;
+      border-radius: 5px;
       .icon {
-        font-size: 0.6rem;
+        font-size: 0.45rem;
         color: $mtYellow;
         margin: 0 0.1rem;
       }
       span {
-        font-size: 0.5rem;
-        font-weight: 400;
+        font-size: 0.45rem;
+        font-weight: 600;
+        @include px2rem(line-height, 100);
       }
     }
   }

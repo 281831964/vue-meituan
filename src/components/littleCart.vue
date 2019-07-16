@@ -30,14 +30,14 @@
     position: fixed;
     right: 0;
     bottom: 3rem;
-    border: 1px solid $mtGrey;
+    right: 0.5rem;
     text-align: center;
     border-radius: 50%;
-    background: #fff;
     @include px2rem(width, 96);
     @include px2rem(line-height, 91);
     .iconfont {
       font-size: 0.8rem;
+      vertical-align: middle;
     }
     .num {
       border-radius: 50%;

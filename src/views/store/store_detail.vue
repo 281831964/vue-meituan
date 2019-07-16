@@ -58,9 +58,10 @@
   #store-detail {
     position: absolute;
     left: 0;
-    top: 0;
+    top: 1rem;
     width: 100%;
     height: 100%;
+    border-radius: 5px;
     background: rgba(10, 8, 8, 0.4);
     z-index: 99;
     .main {
